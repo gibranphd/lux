@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Kabyles, Les Rifains, Les Chaouis et Les Guanches en Luxembourg</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        /* General styling for the body and title */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1b1b1b; /* Darker background for better contrast */
+            color: #fff;
+        }
+
+        /* Styling for the title */
+        #title {
+            text-align: center;
+            font-size: 28px;
+            margin: 20px 0;
+            color: #f0db4f; /* Vibrant title color */
+            font-weight: bold;
+        }
+
+        /* Styling for the map container */
+        #map {
+            height: 80%;
+            width: 100%;
+        }
+
+        /* Styling for the legend */
+        .legend {
+            background-color: rgba(0, 0, 0, 0.8); /* Darker background with good contrast */
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            line-height: 20px;
+            border-radius: 6px;
+            width: 180px;
+        }
+
+        .legend i {
+            width: 24px; /* Larger squares for better visibility */
+            height: 24px;
+            float: left;
+            margin-right: 10px;
+            opacity: 0.9;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Title at the top -->
+    <div id="title">Les Kabyles, Les Rifains, Les Chaouis et Les Guanches en Luxembourg</div>
+
+    <!-- Map container -->
+    <div id="map"></div>
+
+    <!-- Including Leaflet.js -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script>
+        // Initializing the map and setting its view
+        var map = L.map('map').setView([49.6117, 6.1319], 10); // Coordinates for Luxembourg
+
+        // Adding a dark tile layer from CartoDB for a dark-themed map
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors & CartoDB',
+        }).addTo(map);
+
+        // Adding smaller circle markers for different Berber communities with specific colors
+        var kabyleMarker = L.circle([49.6117, 6.1319], {
+            color: '#ffcc00',    // Vibrant yellow for Kabyles
+            fillColor: '#ffcc00',
+            fillOpacity: 0.7,
+            radius: 3000 // Reduced radius for smaller markers
+        }).addTo(map).bindPopup('Les Kabyles à Luxembourg City');
+
+        var rifainMarker = L.circle([49.6267, 6.1596], {
+            color: '#ff6666',    // Bright red for Rifains
+            fillColor: '#ff6666',
+            fillOpacity: 0.7,
+            radius: 3000 // Reduced radius for smaller markers
+        }).addTo(map).bindPopup('Les Rifains à Esch-sur-Alzette');
+
+        var chaouiMarker = L.circle([49.8123, 6.1338], {
+            color: '#66cc66',    // Bright green for Chaouis
+            fillColor: '#66cc66',
+            fillOpacity: 0.7,
+            radius: 3000 // Reduced radius for smaller markers
+        }).addTo(map).bindPopup('Les Chaouis à Ettelbruck');
+
+        var guancheMarker = L.circle([49.5706, 6.1529], {
+            color: '#6699ff',    // Vibrant blue for Guanches
+            fillColor: '#6699ff',
+            fillOpacity: 0.7,
+            radius: 3000 // Reduced radius for smaller markers
+        }).addTo(map).bindPopup('Les Guanches à Differdange');
+
+        // Adding a fixed legend to the map
+        var legend = L.control({ position: 'bottomright' });
+
+        legend.onAdd = function(map) {
+            var div = L.DomUtil.create('div', 'legend'),
+                labels = ['<strong>Communautés Berbères</strong>'],
+                categories = ['Kabyles', 'Rifains', 'Chaouis', 'Guanches'];
+
+            var colors = ['#ffcc00', '#ff6666', '#66cc66', '#6699ff']; // Enhanced colors
+
+            for (var i = 0; i < categories.length; i++) {
+                div.innerHTML +=
+                    '<i style="background:' + colors[i] + '"></i> ' +
+                    categories[i] + '<br>';
+            }
+            return div;
+        };
+
+        legend.addTo(map);
+    </script>
+</body>
+</html>
